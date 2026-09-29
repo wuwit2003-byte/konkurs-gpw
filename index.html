@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Konkurs GPW - Koło Naukowe</title>
+  <title>Konkurs GPW - Test Dzienny</title>
   <style>
     :root {
       --primary: #1e3a8a;
@@ -94,10 +94,10 @@
 <body>
 
 <div class="container">
-  <h1>📈 Konkurs Inwestycyjny KN (GPW)</h1>
+  <h1>🧪 Konkurs GPW - Wersja Testowa (Dniowa)</h1>
   
   <div class="card">
-    <h2>Zgłoś spółkę na kolejny miesiąc</h2>
+    <h2>Zgłoś spółkę na dzisiaj</h2>
     <div id="statusAlert" class="alert"></div>
     
     <form id="voteForm">
@@ -114,7 +114,7 @@
   </div>
 
   <div class="card">
-    <h2>🏆 Tabela Wyników (8 Miesięcy)</h2>
+    <h2>🏆 Tabela Wyników (Test Dzienny)</h2>
     <table>
       <thead>
         <tr>
@@ -132,27 +132,8 @@
 </div>
 
 <script>
-  // WKLEJ SWÓJ ADRES Z KROKU 1 PONIŻEJ:
+  // WKLEJ SWÓJ ADRES APPS SCRIPT PONIŻEJ:
   const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxoCIgwvGGCqoUe5xkarvRHOPqRTFoD6wNbhghR_U96FWkpWqbTg1UZrWh3gxUd-dPjrQ/exec";
-
-  function isVotingOpen() {
-    const today = new Date();
-    const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
-    const currentDay = today.getDate();
-    return currentDay >= (lastDayOfMonth - 6);
-  }
-
-  function setupVotingWindow() {
-    const alertDiv = document.getElementById('statusAlert');
-    const submitBtn = document.getElementById('submitBtn');
-    
-    if (!isVotingOpen()) {
-      alertDiv.className = "alert alert-info";
-      alertDiv.style.display = "block";
-      alertDiv.innerText = "⏳ Typowanie jest obecnie zamknięte. Formularz otwiera się automatycznie w ostatnich 7 dniach każdego miesiąca.";
-      submitBtn.disabled = true;
-    }
-  }
 
   document.getElementById('voteForm').addEventListener('submit', async function(e) {
     e.preventDefault();
@@ -179,7 +160,7 @@
       
       if (result.status === 'success') {
         alertDiv.className = "alert alert-success";
-        alertDiv.innerText = "✅ Typowanie zostało zapisane w arkuszu!";
+        alertDiv.innerText = "✅ Typowanie zapisane w arkuszu!";
         document.getElementById('voteForm').reset();
       } else {
         alertDiv.className = "alert alert-error";
@@ -187,9 +168,9 @@
       }
     } catch (err) {
       alertDiv.className = "alert alert-error";
-      alertDiv.innerText = "❌ Problem z połączeniem. Spróbuj ponownie.";
+      alertDiv.innerText = "❌ Problem z połączeniem.";
     } finally {
-      if (isVotingOpen()) submitBtn.disabled = false;
+      submitBtn.disabled = false;
     }
   });
 
@@ -220,11 +201,10 @@
         tbody.appendChild(tr);
       });
     } catch (err) {
-      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Nie udało się pobrać aktualnych wyników.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Nie udało się pobrać wyników.</td></tr>';
     }
   }
 
-  setupVotingWindow();
   loadLeaderboard();
 </script>
 
